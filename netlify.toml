@@ -1,0 +1,8 @@
+#############################################################################
+# Dev command, required for running netlify dev (locally)
+[dev]
+  command = "yarn dev"
+
+#############################################################################
+[build]
+  functions = "./functions/"

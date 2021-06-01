@@ -1,0 +1,311 @@
+diff --git a/node_modules/react-datocms/dist/Image/index.js b/node_modules/react-datocms/dist/Image/index.js
+index 86595f2..f39e74c 100644
+--- a/node_modules/react-datocms/dist/Image/index.js
++++ b/node_modules/react-datocms/dist/Image/index.js
+@@ -1,85 +1,166 @@
+ "use strict";
+-var __importStar = (this && this.__importStar) || function (mod) {
++
++var _Object$assign = require("@babel/runtime-corejs2/core-js/object/assign");
++
++var _slicedToArray = require("@babel/runtime-corejs2/helpers/slicedToArray");
++
++var _Object$defineProperty = require("@babel/runtime-corejs2/core-js/object/define-property");
++
++var __importStar = this && this.__importStar || function (mod) {
+     if (mod && mod.__esModule) return mod;
+     var result = {};
+-    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
++    if (mod != null) for (var k in mod) {
++        if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
++    }
+     result["default"] = mod;
+     return result;
+ };
+-Object.defineProperty(exports, "__esModule", { value: true });
+-const react_1 = __importStar(require("react"));
+-const react_intersection_observer_1 = require("react-intersection-observer");
+-const imageAddStrategy = ({ lazyLoad, isSsr, isIntersectionObserverAvailable, inView, loaded }) => {
++
++_Object$defineProperty(exports, "__esModule", {
++    value: true
++});
++
++var react_1 = __importStar(require("react"));
++
++var react_intersection_observer_1 = require("react-intersection-observer");
++
++var imageAddStrategy = function imageAddStrategy(_ref) {
++    var lazyLoad = _ref.lazyLoad,
++      isSsr = _ref.isSsr,
++      isIntersectionObserverAvailable = _ref.isIntersectionObserverAvailable,
++      inView = _ref.inView,
++      loaded = _ref.loaded;
++
+     if (!lazyLoad) {
+         return true;
+     }
++
+     if (isSsr) {
+         return false;
+     }
++
+     if (isIntersectionObserverAvailable) {
+         return inView || loaded;
+     }
++
+     return true;
+ };
+-const imageShowStrategy = ({ lazyLoad, isSsr, isIntersectionObserverAvailable, loaded }) => {
++
++var imageShowStrategy = function imageShowStrategy(_ref2) {
++    var lazyLoad = _ref2.lazyLoad,
++      isSsr = _ref2.isSsr,
++      isIntersectionObserverAvailable = _ref2.isIntersectionObserverAvailable,
++      loaded = _ref2.loaded;
++
+     if (!lazyLoad) {
+         return true;
+     }
++
+     if (isSsr) {
+         return false;
+     }
++
+     if (isIntersectionObserverAvailable) {
+         return loaded;
+     }
++
+     return true;
+ };
+-exports.Image = function ({ className, fadeInDuration, intersectionTreshold, intersectionMargin, pictureClassName, lazyLoad = true, data }) {
+-    const [loaded, setLoaded] = react_1.useState(false);
+-    const handleLoad = react_1.useCallback(() => {
++
++exports.Image = function (_ref3) {
++    var className = _ref3.className,
++      fadeInDuration = _ref3.fadeInDuration,
++      intersectionTreshold = _ref3.intersectionTreshold,
++      intersectionMargin = _ref3.intersectionMargin,
++      pictureClassName = _ref3.pictureClassName,
++      _ref3$lazyLoad = _ref3.lazyLoad,
++      lazyLoad = _ref3$lazyLoad === void 0 ? true : _ref3$lazyLoad,
++      data = _ref3.data;
++
++    var _react_1$useState = react_1.useState(false),
++      _react_1$useState2 = _slicedToArray(_react_1$useState, 2),
++      loaded = _react_1$useState2[0],
++      setLoaded = _react_1$useState2[1];
++
++    var handleLoad = react_1.useCallback(function () {
+         setLoaded(true);
+     }, []);
+-    const [ref, inView, _entry] = react_intersection_observer_1.useInView({
+-        threshold: intersectionTreshold || 0,
+-        rootMargin: intersectionMargin || "0px 0px 0px 0px",
+-        triggerOnce: true
+-    });
+-    const isSsr = typeof window === "undefined";
+-    const isIntersectionObserverAvailable = isSsr
+-        ? false
+-        : !!window.IntersectionObserver;
+-    const absolutePositioning = {
++
++    var _react_intersection_o = react_intersection_observer_1.useInView({
++          threshold: intersectionTreshold || 0,
++          rootMargin: intersectionMargin || "0px 0px 0px 0px",
++          triggerOnce: true
++      }),
++      _react_intersection_o2 = _slicedToArray(_react_intersection_o, 3),
++      ref = _react_intersection_o2[0],
++      inView = _react_intersection_o2[1],
++      _entry = _react_intersection_o2[2];
++
++    var isSsr = typeof window === "undefined";
++    var isIntersectionObserverAvailable = isSsr ? false : !!window.IntersectionObserver;
++    var absolutePositioning = {
+         position: "absolute",
+         left: 0,
+         top: 0,
+         width: "100%"
+     };
+-    const addImage = imageAddStrategy({ lazyLoad, isSsr, isIntersectionObserverAvailable, inView, loaded });
+-    const showImage = imageShowStrategy({ lazyLoad, isSsr, isIntersectionObserverAvailable, inView, loaded });
+-    const webpSource = data.webpSrcSet && (react_1.default.createElement("source", { srcSet: data.webpSrcSet, sizes: data.sizes, type: "image/webp" }));
+-    const regularSource = data.srcSet && (react_1.default.createElement("source", { srcSet: data.srcSet, sizes: data.sizes }));
+-    const placeholder = react_1.default.createElement("div", { style: {
+-            paddingTop: `${100.0 / data.aspectRatio}%`,
+-            backgroundImage: data.base64 ? `url(${data.base64})` : null,
++    var addImage = imageAddStrategy({
++        lazyLoad: lazyLoad,
++        isSsr: isSsr,
++        isIntersectionObserverAvailable: isIntersectionObserverAvailable,
++        inView: inView,
++        loaded: loaded
++    });
++    var showImage = imageShowStrategy({
++        lazyLoad: lazyLoad,
++        isSsr: isSsr,
++        isIntersectionObserverAvailable: isIntersectionObserverAvailable,
++        inView: inView,
++        loaded: loaded
++    });
++    var webpSource = data.webpSrcSet && react_1["default"].createElement("source", {
++        srcSet: data.webpSrcSet,
++        sizes: data.sizes,
++        type: "image/webp"
++    });
++    var regularSource = data.srcSet && react_1["default"].createElement("source", {
++        srcSet: data.srcSet,
++        sizes: data.sizes
++    });
++    var placeholder = react_1["default"].createElement("div", {
++        style: {
++            paddingTop: "".concat(100.0 / data.aspectRatio, "%"),
++            backgroundImage: data.base64 ? "url(".concat(data.base64, ")") : null,
+             backgroundColor: data.bgColor,
+             backgroundSize: "cover"
+-        } });
+-    return (react_1.default.createElement("div", { ref: ref, className: className, style: {
++        }
++    });
++    return react_1["default"].createElement("div", {
++        ref: ref,
++        className: className,
++        style: {
+             position: "relative",
+             display: "block",
+             overflow: "hidden",
+-            maxWidth: `${data.width}px`,
+-        } },
+-        placeholder,
+-        addImage && (react_1.default.createElement("picture", { className: pictureClassName, style: Object.assign(Object.assign({}, absolutePositioning), { opacity: showImage ? 1 : 0, transition: !fadeInDuration || fadeInDuration > 0
+-                    ? `opacity ${fadeInDuration || 500}ms`
+-                    : null }) },
+-            webpSource,
+-            regularSource,
+-            data.src && (react_1.default.createElement("img", { src: data.src, alt: data.alt, title: data.title, onLoad: handleLoad })))),
+-        react_1.default.createElement("noscript", null,
+-            react_1.default.createElement("picture", { className: pictureClassName, style: absolutePositioning },
+-                webpSource,
+-                regularSource,
+-                data.src && react_1.default.createElement("img", { src: data.src, alt: data.alt, title: data.title })))));
++            maxWidth: "".concat(data.width, "px")
++        }
++    }, placeholder, addImage && react_1["default"].createElement("picture", {
++        className: pictureClassName,
++        style: _Object$assign(_Object$assign({}, absolutePositioning), {
++            opacity: showImage ? 1 : 0,
++            transition: !fadeInDuration || fadeInDuration > 0 ? "opacity ".concat(fadeInDuration || 500, "ms") : null
++        })
++    }, webpSource, regularSource, data.src && react_1["default"].createElement("img", {
++        src: data.src,
++        alt: data.alt,
++        title: data.title,
++        onLoad: handleLoad
++    })), react_1["default"].createElement("noscript", null, react_1["default"].createElement("picture", {
++        className: pictureClassName,
++        style: absolutePositioning
++    }, webpSource, regularSource, data.src && react_1["default"].createElement("img", {
++        src: data.src,
++        alt: data.alt,
++        title: data.title
++    }))));
+ };
+-//# sourceMappingURL=index.js.map
+\ No newline at end of file
+diff --git a/node_modules/react-datocms/dist/Seo/index.js b/node_modules/react-datocms/dist/Seo/index.js
+index 1f901da..f2a0eda 100644
+--- a/node_modules/react-datocms/dist/Seo/index.js
++++ b/node_modules/react-datocms/dist/Seo/index.js
+@@ -1,34 +1,75 @@
+ "use strict";
+-var __importDefault = (this && this.__importDefault) || function (mod) {
+-    return (mod && mod.__esModule) ? mod : { "default": mod };
++
++var _slicedToArray = require("@babel/runtime-corejs2/helpers/slicedToArray");
++
++var _Object$entries = require("@babel/runtime-corejs2/core-js/object/entries");
++
++var _Object$assign = require("@babel/runtime-corejs2/core-js/object/assign");
++
++require("core-js/modules/es6.function.name");
++
++require("core-js/modules/es6.array.map");
++
++var _Object$defineProperty = require("@babel/runtime-corejs2/core-js/object/define-property");
++
++var __importDefault = this && this.__importDefault || function (mod) {
++    return mod && mod.__esModule ? mod : {
++        "default": mod
++    };
+ };
+-Object.defineProperty(exports, "__esModule", { value: true });
+-const react_1 = __importDefault(require("react"));
++
++_Object$defineProperty(exports, "__esModule", {
++    value: true
++});
++
++var react_1 = __importDefault(require("react"));
++
+ exports.renderMetaTags = function (data) {
+-    return data.map(({ tag, attributes, content }) => {
+-        let key = [tag];
++    return data.map(function (_ref) {
++        var tag = _ref.tag,
++          attributes = _ref.attributes,
++          content = _ref.content;
++        var key = [tag];
++
+         if (attributes && "property" in attributes) {
+             key.push(attributes.property);
+         }
++
+         if (attributes && "name" in attributes) {
+             key.push(attributes.name);
+         }
+-        const Tag = tag;
+-        return (react_1.default.createElement(Tag, Object.assign({ key: key.join("-") }, attributes), content));
++
++        var Tag = tag;
++        return react_1["default"].createElement(Tag, _Object$assign({
++            key: key.join("-")
++        }, attributes), content);
+     });
+ };
+-const serializeAttributes = (attributes) => {
++
++var serializeAttributes = function serializeAttributes(attributes) {
+     if (!attributes) {
+         return "";
+     }
+-    return " " + Object.entries(attributes).map(([key, value]) => (`${key}="${value}"`)).join(" ");
++
++    return " " + _Object$entries(attributes).map(function (_ref2) {
++        var _ref3 = _slicedToArray(_ref2, 2),
++          key = _ref3[0],
++          value = _ref3[1];
++
++        return "".concat(key, "=\"").concat(value, "\"");
++    }).join(" ");
+ };
++
+ exports.renderMetaTagsToString = function (data) {
+-    return data.map(({ tag, attributes, content }) => {
++    return data.map(function (_ref4) {
++        var tag = _ref4.tag,
++          attributes = _ref4.attributes,
++          content = _ref4.content;
++
+         if (content) {
+-            return `<${tag}${serializeAttributes(attributes)}>${content}</${tag}>`;
++            return "<".concat(tag).concat(serializeAttributes(attributes), ">").concat(content, "</").concat(tag, ">");
+         }
+-        return `<${tag}${serializeAttributes(attributes)} />`;
++
++        return "<".concat(tag).concat(serializeAttributes(attributes), " />");
+     }).join("\n");
+ };
+-//# sourceMappingURL=index.js.map
+\ No newline at end of file
